@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean
+from sqlalchemy import Column, Integer, String, Boolean, DATE, func
 from sqlalchemy.orm import declarative_base
 from app.database import engine
 
@@ -14,6 +14,7 @@ class TodoTable(Base):
     name = Column(String(25),nullable= False)
     description = Column(String(50))
     completed = Column(Boolean, nullable=False)
+    creation_date = Column(DATE, nullable=False, default=func.current_date())
 
     def __init__(self, nome=None, description=None):
         self.name = nome
