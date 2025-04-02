@@ -1,8 +1,10 @@
-# Python bytecode files
+# Python cache
 __pycache__/
 *.py[cod]
 *$py.class
-*.pyc
+.pytest_cache/
+.coverage
+htmlcov/
 
 # Distribution / packaging
 dist/
@@ -15,12 +17,6 @@ env/
 .env/
 .venv/
 ENV/
-
-# IDE specific files
-.idea/
-.vscode/
-*.swp
-*.swo
 
 # Database files
 *.db
@@ -41,19 +37,13 @@ logs/
 # Local configuration
 instance/
 
-# Coverage reports
-.coverage
-htmlcov/
+# IDE specific files
+.idea/
+.vscode/
+*.swp
+*.swo
 
-# pytest
-.pytest_cache/
-
-# mypy
-.mypy_cache/
-
-# Jupyter Notebook
-.ipynb_checkpoints
-
-# OS specific
+# Temporary files
+*.tmp
+*~
 .DS_Store
-Thumbs.db
