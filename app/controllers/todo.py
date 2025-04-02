@@ -17,6 +17,7 @@ def add_to_DB(name: str, description = "") -> None:
 def get_all():
     session = Session()
     content = session.query(TodoTable).all()
+    session.close()
     return content
 
 
