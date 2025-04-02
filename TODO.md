@@ -1,7 +1,7 @@
 ## TODO
 
 - Adicionar verificação de dados (Pydantic)
-- Criar uma forma segura de tentar fazer operações com o banco de dados
+- Criar uma forma segura de tentar fazer operações com o banco de dados [✔️]
 - Finalizar a camada de Models (Banco de dados)
 - Finalizar a parte de controllers referentes ao banco de dados
 - Adicionar um versionamento no requirements.txt para as bibliotecas
