@@ -7,7 +7,7 @@ Base = declarative_base()
 
 
 # Tables of the DB
-class todo_table(Base):
+class TodoTable(Base):
     __tablename__ = "todo"
     
     _id = Column(Integer, primary_key=True, autoincrement=True, nullable=False)
