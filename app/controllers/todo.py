@@ -1,6 +1,6 @@
 from app.models.todo import TodoTable
 from app.database import engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import query, sessionmaker
 from sqlalchemy.exc import SQLAlchemyError
 from contextlib import contextmanager
 from functools import wraps
@@ -56,6 +56,16 @@ def get_all(session):
         result.append(todo)
         
     return result
-    
+
+@db_handler
+def mark_task_completed(session, task_id):
+    """Change the flag of completed to True"""
+    query_result = session.query(TodoTable).filter(TodoTable._id == task_id).first()
+    if query_result:
+        query_result.completed = True
+        return True
+    return False
+
+
 
 
