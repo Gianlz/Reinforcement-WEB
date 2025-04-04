@@ -66,6 +66,13 @@ def mark_task_completed(session, task_id):
         return True
     return False
 
-
+@db_handler
+def delete_task_by_id(session, task_id):
+    """Delete a task from the database by its ID"""
+    query_result = session.query(TodoTable).filter(TodoTable._id == task_id).first()
+    if query_result:
+        session.delete(query_result)
+        return True
+    return False
 
 
