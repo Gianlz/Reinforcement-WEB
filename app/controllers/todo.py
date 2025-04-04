@@ -3,6 +3,7 @@ from app.database import engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.exc import SQLAlchemyError
 from contextlib import contextmanager
+from functools import wraps
 
 
 SessionLocal = sessionmaker(bind=engine)
@@ -21,34 +22,40 @@ def db_session():
         session.close()
 
 
-def add_to_DB(name: str, description = "") -> None:
+def db_handler(func):
+    """Decorator para gerenciar sessões de banco de dados automaticamente"""
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        with db_session() as session:
+            try:
+                return func(session, *args, **kwargs)
+            except SQLAlchemyError as e:
+                raise RuntimeError(f"Database error {str(e)}")
+    return wrapper
+
+
+@db_handler
+def add_to_DB(session, name: str, description = "") -> None:
     """Adiciona novo TODO para o banco de dados"""
-    tabela = TodoTable(name,description)
-    with db_session() as session:
-        try:
-            session.add(tabela) 
-        except SQLAlchemyError as e:
-            raise RuntimeError(f"Database error {str(e)}")
-            
+    tabela = TodoTable(name, description)
+    session.add(tabela)
     
-def get_all():
-    with db_session() as session:
-        try:
-            query_result = session.query(TodoTable).all()
-            result = []
-            for item in query_result:
-                todo = {
-                    "_id": item._id,
-                    "name": item.name,
-                    "description": item.description,
-                    "completed": item.completed,
-                    "creation_date": item.creation_date
-                }
-                result.append(todo)
-                
-            return result
-        except SQLAlchemyError as e:
-            raise RuntimeError(f"Database error {str(e)}")
+    
+@db_handler
+def get_all(session):
+    query_result = session.query(TodoTable).all()
+    result = []
+    for item in query_result:
+        todo = {
+            "_id": item._id,
+            "name": item.name,
+            "description": item.description,
+            "completed": item.completed,
+            "creation_date": item.creation_date
+        }
+        result.append(todo)
+        
+    return result
     
 
 
