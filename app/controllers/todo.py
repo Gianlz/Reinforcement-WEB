@@ -59,7 +59,7 @@ def get_all(session):
 
 @db_handler
 def mark_task_completed(session, task_id):
-    """Change the flag of completed to True"""
+    """Muda a flag da tarefa para completada = True"""
     query_result = session.query(TodoTable).filter(TodoTable._id == task_id).first()
     if query_result:
         query_result.completed = True
@@ -68,7 +68,7 @@ def mark_task_completed(session, task_id):
 
 @db_handler
 def delete_task_by_id(session, task_id):
-    """Delete a task from the database by its ID"""
+    """Deleta a task do banco de dados pelo ID"""
     query_result = session.query(TodoTable).filter(TodoTable._id == task_id).first()
     if query_result:
         session.delete(query_result)
